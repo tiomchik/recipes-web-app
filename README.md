@@ -23,12 +23,12 @@ git clone https://github.com/tiomchik/recipes-web-app.git
 Windows:
 ```powershell
 py -m venv .venv
-& venv/scripts/activate.ps1
+& .venv/scripts/activate.ps1
 ```
 UNIX:
 ```bash
 python3 -m venv .venv
-source venv/scripts/activate
+source .venv/scripts/activate
 ```
 
 3. Install the requirements.

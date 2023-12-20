@@ -31,12 +31,16 @@ async def index(
     user: User = Depends(optional_current_user),
 ) -> _TemplateResponse:
     """Home page."""
-    recipes = await _get_recipes(session, page=page)
+    context = {"request": request, "user": user}
+    try:
+        recipes = await _get_recipes(session, page=page)
+    except HTTPException:
+        recipes = None
+    else:
+        context["paginator"] = recipes.pop()
 
-    context = {
-        "request": request, "recipes": recipes, "paginator": recipes.pop(),
-        "user": user
-    }
+    context["recipes"] = recipes
+
     return templates.TemplateResponse("index.html", context)
 
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css')}}">
+  <script src="{{ url_for('static', path='js/index.js') }}" defer></script>
+  <script src="{{ url_for('static', path='js/shortcut.js') }}" defer></script>
+  <title>Recipes</title>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="border-bottom">
+    <div class="container">
+      <nav class="nav my-2">
+        <!-- Logo -->
+        <a href="{{ url_for('index') }}" class="nav-link">Recipes</a>
+
+        <!-- Change theme button -->
+        <button id="theme" title="Switch theme"></button>
+
+        <!-- Random recipe -->
+        <a href="{{ url_for('random_recipe') }}" class="btn btn-primary">Random recipe</a>
+        
+        {% if user %}
+          <!-- Add recipe -->
+          <a href="{{ url_for('create') }}" class="btn btn-warning">Add recipe</a>
+
+          <!-- Profile -->
+          <div class="d-flex">
+            <a href="{{ url_for('logout') }}" class="nav-link">Log out</a>
+            <p class="m-0 ps-1 py-2">{{ user }}</p>
+            <img class="svg github-icon" src="{{ url_for('static', path='img/user.svg')}}" alt="User" width="40" height="40">
+          </div>
+        {% else %}
+          <!-- Log in and register -->
+          <div class="d-flex">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Log in</a>
+            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+          </div>
+        {% endif %}
+
+        <!-- Search -->
+        <form action="{{ url_for('search') }}" method="get" class="input-group w-100 m-3">
+          <input class="form-control" type="text" name="search_query" id="search" placeholder="CTRL (CMD) + K to search">
+
+          <button type="submit" class="input-group-text" id="basic-addon1" title="Search">
+            <img class="svg" src="{{ url_for('static', path='img/search.svg') }}" alt="Search">
+          </button>
+        </form>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="border-top">
+    <div class="container">
+      <h3 class="my-4">Site is licensed under the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT license</a>
+      </h3>
+
+      <a href="https://github.com/tiomchik/recipes-web-app">
+        <img class="svg footer-icon mb-4" src="{{ url_for('static', path='img/github.svg') }}" alt="GitHub repository" width="60" height="60">
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>

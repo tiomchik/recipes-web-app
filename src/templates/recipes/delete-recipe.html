@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-3">Recipe deleted successful.</h1>
+<a href="{{ url_for('index') }}">Home</a><br>
+<a href="{{ url_for('create') }}">Add another recipe</a>
+{% endblock %}

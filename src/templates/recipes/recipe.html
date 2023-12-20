@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="headling mb-5">{{ recipe.headling|escape }}</h1>
+<figure class="text-end">
+  <figcaption class="blockquote-footer">
+    Author: {{ recipe.author }}
+  </figcaption>
+</figure>
+
+{{ recipe.text|nl2br|escape }}
+
+<!-- FOR AUTHORS -->
+{% if recipe.author == user.username %}
+  <div class="d-flex justify-content-end my-4">
+    <!-- Update -->
+    <a href="{{ url_for('update', id=recipe.id) }}" class="btn btn-info mx-3">Update</a>
+    <!-- Delete -->
+    <a href="#offcanvasDelete" class="btn btn-danger" data-bs-toggle="offcanvas"
+      aria-controls="offcanvasExample">Delete</a>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDelete" aria-labelledby="offcanvasDelete">
+    <!-- Offcanvas header -->
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Delete</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <p>Are you sure to delete this recipe?</p>
+      <button class="btn btn-primary" data-bs-dismiss="offcanvas">No</button>
+      <a data-href="{{ url_for('delete', id=recipe.id) }}" class="btn btn-danger ms-3"
+        id="offcanvasDeleteButton">Yes</a>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
+{% endif %}
+
+
+<!-- Another recipes -->
+<div class="border-top">
+  <h3 class="mt-2 mb-3">Another recipes:</h3>
+  {% for loop_recipe in recipes %}
+    {% if loop_recipe.id == recipe.id %}
+      <div class="card d-inline-flex border-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ loop_recipe.headling|escape }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">{{ loop_recipe.author|escape }}</h6>
+          <p class="card-text">{{ loop_recipe.text|escape }}</p>
+          <a href="{{ url_for('recipe', id=loop_recipe.id) }}" class="card-link btn btn-primary">Read</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="card d-inline-flex">
+        <div class="card-body">
+          <h5 class="card-title">{{ loop_recipe.headling|escape }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">{{ loop_recipe.author|escape }}</h6>
+          <p class="card-text">{{ loop_recipe.text|escape }}</p>
+          <a href="{{ url_for('recipe', id=loop_recipe.id) }}" class="card-link btn btn-primary">Read</a>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Display table because ms-auto don't working without it:/ -->
+<a href="{{ url_for('index') }}" class="btn btn-success ms-auto d-table">Home</a>
+{% endblock %}

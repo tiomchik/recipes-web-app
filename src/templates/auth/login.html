@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Log in</h1>
+<p class="mb-4">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+
+<form method="post">
+  <!-- Email -->
+  <div class="my-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" name="email" minlength="4" maxlength="256" required>
+  </div>
+
+  <!-- Password -->
+  <div class="my-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" name="password" minlength="8" maxlength="30" required>
+  </div>
+
+  {% if errors %}
+    {% for error in errors %}
+      <p style="color: var(--bs-danger);">{{ error }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <button type="submit" class="btn btn-primary mt-1">Log in</button>
+</form>
+{% endblock %}

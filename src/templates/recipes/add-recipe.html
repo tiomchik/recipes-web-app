@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Add recipe</h1>
+
+<form method="post">
+  <!-- Headling -->
+  <div class="my-3">
+    <label for="headling" class="form-label">Headling</label>
+    <input type="text" class="form-control" name="headling" minlength="10" maxlength="40" required>
+  </div>
+
+  <!-- Text -->
+  <div class="my-3">
+    <label for="recipe_text" class="form-label">Text</label>
+    <textarea class="form-control" name="text" minlength="10" rows="10" required></textarea>
+  </div>
+
+  {% if errors %}
+    {% for error in errors %}
+      <p style="color: var(--bs-danger);">{{ error }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <button type="submit" class="btn btn-primary mt-1">Add</button>
+</form>
+{% endblock %}
